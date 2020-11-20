@@ -1,263 +1,343 @@
 <script Language="JavaScript">
 
+            count=0;
+            stimuliOrder =[0, 1]
 
-function startit()
-{
-   count=0;
-    correctCount= 0;
-    incorrectCount = 0;
-    questin = [];
-    wrongins = [];
+            notreatmisinfoshare= 0;
+            notreatmisinfonotshare = 0;
+            notreatfactualshare = 0;
+            notreatfactualnotshare = 0;
 
-    document.getElementById('ansfeedback').style.display = 'none';
-    document.getElementById('rtfeedback').style.display = 'none';
-    document.getElementById('perfectScore').style.display = 'none';
-    document.getElementById('finalDisplay').style.display = 'none';
+            treatmisinfoshare= 0;
+            treatmisinfonotshare = 0;
+            treatfactualshare = 0;
+            treatfactualnotshare = 0;
 
-    questin= ["What is the capital of Massachusetts?-Boston", 
-    "What is the capital of California?-Sacramento", 
-    "What is the capital of Oregon?-Salem",
-    "What is the capital of Texas?-Austin", 
-    "What is the capital of Idaho?-Boise"];
-
-
-    wrongins= ["Springfield", "Denver", "Jacksonville", "Chicago", "Montgomery",  "Helena", "Juneau", "Lincoln", 
-    "Carson City", "Concord", "Hartford", "Dover",  "Columbus", "Columbia", "Pierre", "Richmond", "Lansing", 
-    "Olympia", "Charleston", "Madison"];
-
-showprob();
-}
+            mixedTweets = ["The Earth is Round.-0", 
+                           "Global Warming is real.-0", 
+                           "Unicorns are fake.-0",
+                           "Science is important to our understanding of the world.-0", 
+                           "Donald Trump is our current president.-0", 
+                           "The Earth is flat.-1", 
+                           "Global Warming is fake.-1", 
+                           "Unicorns are real.-1",
+                           "Science is a conspiracy made up by elitists.-1", 
+                           "Donald Trump is the leader of the Lizard People.-1"];
 
 
-function showprob()
-{
-   
-   if (count < 5)
-   {
-     shuffle(questin);
+             treatmentMixedTweets = ["UCLA is the number 1 public school .-0", 
+                                     "Water is wet.-0", 
+                                     "Dolphins are real.-0",
+                                     "Computer science requires computers.-0", 
+                                     "Rainbows come after rain.-0", 
+                                     "UC Berkeley is the number 1 public school lol.-1", 
+                                     "Water is not wet.-1", 
+                                     "Dolphins are fake.-1",
+                                     "Computer Science requires potatos.-1", 
+                                     "Rainbows come before rain.-1"];
 
-     quest1 = questin[0];
-
-     questAns1 = quest1.split("-");
-
-     finalquest1 = questAns1[0];
-
-     finalans1 = questAns1[1];
-
-     DisplayQues(finalquest1);
- 
-     shuffle(wrongins);
-
-     rightans=finalans1;
-
-     multipleAns = [];
-
-     multipleAns[0] = wrongins[0];
-     multipleAns[1] = wrongins[1];
-     multipleAns[2] = wrongins[2];
-     multipleAns[3] = rightans;
-
-     orderAns(multipleAns); 
- 
-     document.getElementById('ans1').innerHTML='d) ' + multipleAns[0];
-     document.getElementById('ans1').style.width = "200px";
-     document.getElementById('ans2').innerHTML='f) ' + multipleAns[1];
-     document.getElementById('ans2').style.width = "200px";
-     document.getElementById('ans3').innerHTML='k) ' + multipleAns[2];   
-     document.getElementById('ans3').style.width = "200px";
-     document.getElementById('ans4').innerHTML='l) ' + multipleAns[3];
-     document.getElementById('ans4').style.width = "200px";
-     
-     
-     document.getElementById('choiceAns').style.display = 'block';
-
-     starttime = 0;
-     starttime=new Date().getTime();
-     questin.shift();
-
-     
-   } 
-   
-   else
-   {
-      percentCorrect = (correctCount/5) * 100;
-      document.getElementById('finalDisplay').innerHTML = "You got " + percentCorrect + "% correct."
-      document.getElementById('finalDisplay').style.display = 'block';
-      if (percentCorrect == 100)
-      {
-         document.getElementById('perfectScore').innerHTML = "You are awesome."
-         document.getElementById('perfectScore').style.display = 'block';
-      }
-   }
-      
-}
-
-function orderAns(ansArray)
-{
-   x=0;
-   x=Math.random();
-   randPos=Math.floor(x*4);
-   var temp2 = ansArray[3];
-   ansArray[3] = ansArray[randPos];
-   ansArray[randPos] = temp2;
-   wrongAns = [];
-
-  
-   if (randPos == 0)
-   {
-      wrongAns[0] = ansArray[1];
-      wrongAns[1] = ansArray[2];
-      wrongAns[2] = ansArray[3];
-      ansArray = [];
-      shuffle(wrongAns);
-      ansArray[0] = temp2;
-      ansArray[1] = wrongAns[1];
-      ansArray[2] = wrongAns[2];
-      ansArray[3] = wrongAns[3];
-      correctKey = 68;
-
-   }
-   if (randPos == 1)
-   {
-      wrongAns[0] = ansArray[0];
-      wrongAns[1] = ansArray[2];
-      wrongAns[2] = ansArray[3];
-      ansArray = [];
-      shuffle(wrongAns);
-      ansArray[0] = wrongAns[0];
-      ansArray[1] = temp2;
-      ansArray[2] = wrongAns[2];
-      ansArray[3] = wrongAns[3];
-      correctKey = 70;
-   }
-   if (randPos == 2)
-   {
-      wrongAns[0] = ansArray[0];
-      wrongAns[1] = ansArray[1];
-      wrongAns[2] = ansArray[3];
-      ansArray = [];
-      shuffle(wrongAns);
-      ansArray[0] = wrongAns[0];
-      ansArray[1] = wrongAns[1];
-      ansArray[2] = temp2;
-      ansArray[3] = wrongAns[3];
-      correctKey = 75;
-   }
-   if (randPos == 3)
-   {
-      wrongAns[0] = ansArray[0];
-      wrongAns[1] = ansArray[1];
-      wrongAns[2] = ansArray[2];
-      ansArray = [];
-      shuffle(wrongAns);
-      ansArray[0] = wrongAns[0];
-      ansArray[1] = wrongAns[1];
-      ansArray[2] = wrongAns[2];
-      ansArray[3] = temp2;
-      correctKey = 76;
-   }
-}
-
-function shuffle(array)
-{
-     for (var i = array.length - 1; i > 0; i--) 
-     {
-          var j = Math.floor(Math.random() * (i + 1));
-          var temp = array [i];
-          array[i] = array[j];
-          array[j] = temp;
-      }
-}
-
-
-function DisplayQues (question)
-{
-   document.getElementById('questions').innerHTML= question;
-   document.getElementById('questions').style.display = 'block';
-}
+            shuffle(stimuliOrder);
 
 
 
-function runScript(e)
-{
-   valresp=0;
 
-   if (e.keyCode == 68 || e.keyCode == 70 || e.keyCode == 75 || e.keyCode == 76 || e.keyCode == 32)
-   {
-      valresp=1;
-   }
+        function startit()
+        {
+            
+            
 
-   if (valresp==1)
-   {
-      endtime = 0;
-      endtime=new Date().getTime();
-      resptime=endtime-starttime;
-      resptime=resptime/1000;
+            if (count == 10)
+            {
 
-      if (e.keyCode == correctKey)
-      {
-          document.getElementById('ansfeedback').innerHTML = 'YOU ARE CORRECT';
-          document.getElementById('ansfeedback').style.color = '#228C22';
-          document.getElementById('ansfeedback').style.fontWeight = 'bold';
-          document.getElementById('ansfeedback').style.display = 'block';
+                 stimuliOrder.shift();
 
-          document.getElementById('rtfeedback').innerHTML = 'Your Response Time Was ' + resptime + ' Sec';
-          document.getElementById('rtfeedback').style.color = '#228C22';
-          document.getElementById('rtfeedback').style.fontWeight = 'bold';
-          document.getElementById('rtfeedback').style.display = 'block';
-          correctCount = correctCount + 1;
-      
-      }
-      if (e.keyCode !== correctKey)
-      {
-          document.getElementById('ansfeedback').innerHTML = 'INCORRECT';
-          document.getElementById('ansfeedback').style.color = '#FF0000';
-          document.getElementById('ansfeedback').style.fontWeight = 'bold';
-          document.getElementById('ansfeedback').style.display = 'block';
+            }
+            
+            
 
-          document.getElementById('rtfeedback').innerHTML = 'Your Response Time Was ' + resptime + ' Sec';
-          document.getElementById('rtfeedback').style.color = '#FF0000';
-          document.getElementById('rtfeedback').style.fontWeight = 'bold';
-          document.getElementById('rtfeedback').style.display = 'block';
-          incorrectCount = incorrectCount + 1;    
-      }
-      if (e.keyCode == 32)
-      {
+            
+            document.getElementById('startbutton').style.display = 'none';
+            document.getElementById('tweet').style.display ='block';
+            document.getElementById('sharebuttons').style.display = 'block';
+        
+
+            
+
+            showtwt();
+
+        }
+
+
+        function showtwt()
+        {
+
+          if (count < 20)
+          {
+              
+           //For the first treatment condition
+            if (stimuliOrder[0] == 0)
+            {
+                       
+                
+                    shuffle(mixedTweets);
+
+                    mixedTweets1 = mixedTweets[0];
+
+                    mixedTweets1 = mixedTweets1.split("-");
+
+                    finalTweet = mixedTweets1[0];
+
+                    finalans = mixedTweets1[1];
+
+
+                    document.getElementById('tweetpost').innerHTML= finalTweet;
+                    document.getElementById('tweetpost').style.display = 'block';
+
+                
+                         
+                    
+                
+
+            }
+            // For the second treatment condition 
+            else 
+            {
+
+                shuffle(treatmentMixedTweets);
+
+                treatmentMixedTweets1 = treatmentMixedTweets[0];
+
+                treatmentMixedTweets1 = treatmentMixedTweets1.split("-");
+
+                treatFinalTweet = treatmentMixedTweets1[0];
+
+                finalans = treatmentMixedTweets1[1];
+
+
+                document.getElementById('tweetpost').innerHTML= treatFinalTweet;
+                document.getElementById('tweetpost').style.display = 'block';
+
+                
+
+            }
+          }
+          else 
+          {
+            endprogram();
+          }
+
+        }
+
+    
+        function endprogram()
+        {
+
+            document.getElementById('sharebuttons').style.display = 'none';
+            document.getElementById('tweet').style.display ='none';
+            document.getElementById('tweetpost').style.display = 'none';
+            document.getElementById('thankyoumessage').style.display = 'block';
+
+
+            notreatfactualshare = notreatfactualshare.toString();
+            notreatfactualnotshare = notreatfactualnotshare.toString();
+            notreatmisinfoshare = notreatmisinfoshare.toString();
+            notreatmisinfonotshare = notreatmisinfonotshare.toString();
+            treatfactualshare = treatfactualshare.toString();
+            treatfactualnotshare = treatfactualnotshare.toString();
+            treatmisinfoshare = treatmisinfoshare.toString();
+            treatmisinfonotshare = treatmisinfonotshare.toString();
+
+    
+
+    
+            
+
+            document.getElementById('sharefactualnotreat').innerHTML= "No Treatment, Shared Factual: " + notreatfactualshare;
+            document.getElementById('notsharedfactualnotreat').innerHTML= "No Treatment, Not Shared Factual: " + notreatfactualnotshare;
+            document.getElementById('sharedmisinfonotreat').innerHTML= "No Treatment, Shared Misinformation: " + notreatmisinfoshare;
+            document.getElementById('notsharedmisinfonotreat').innerHTML= "No Treatment, Not Shared Misinformation: " + notreatmisinfonotshare;
+
+            document.getElementById('sharedfactualtreat').innerHTML= "Treatment, Shared Factual: " + treatfactualshare;
+            document.getElementById('notsharedfactualtreat').innerHTML= "Treatment, Not Shared Factual: " + treatfactualnotshare;
+            document.getElementById('sharedmisinfotreat').innerHTML= "Treatment, Shared Misinformation: " + treatmisinfoshare;
+            document.getElementById('notsharedmisinfotreat').innerHTML= "Treatment, Not Shared Misinformation: " + treatmisinfonotshare;
+
+            document.getElementById('finalresults').style.display = 'block';
+
+        }
+
+        function shuffle(array) 
+        {
+            for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array [i];
+            array[i] = array[j];
+            array[j] = temp;
+            }
+        }
+
+
+        function shareeval()
+        {
+            
+            //No treatment. Clicked share and tweet was factual.
+            if (finalans == 0 && stimuliOrder[0] == 0)
+            {
+                notreatfactualshare = notreatfactualshare + 1; 
+                    
+                mixedTweets.shift();
+
+            }
+            //No treatment. Clicked share and tweet was misinfo.
+            if (finalans == 1 && stimuliOrder[0] == 0)
+            {
+
+                notreatmisinfoshare = notreatmisinfoshare + 1;
+                mixedTweets.shift();
+                
+            }
+            //Treatment. Clicked share and tweet was factual. 
+            if (finalans == 0 && stimuliOrder[0] == 1)
+            {
+
+                if (confirm("In an attempt to limit the spread of misinformation, we ask you to double-check the credibility and accuracy of the information you plan to share. This tweet may clearly be factual, but it may also be inaccurate. Click the 'OK' button if you still wish to share the post. Click the 'Cancel' button if do not want to share the post."))
+                {
+
+                    treatfactualshare = treatfactualshare + 1;
+                    treatmentMixedTweets.shift();
+
+                }
+                else
+                {
+                    treatfactualnotshare = treatfactualnotshare + 1;
+                    treatmentMixedTweets.shift();
+
+                }
+
+
+            }
+            //Treatment. Clicked share and the tweet was misinfo.
+            if (finalans == 1 && stimuliOrder[0] == 1)
+            {
+
+                if (confirm("In an attempt to limit the spread of misinformation, we ask you to double-check the credibility and accuracy of the information you plan to share. This tweet may clearly be factual, but it may also be inaccurate. Click the 'OK' button if you still wish to share the post. Click the 'Cancel' button if do not want to share the post."))
+                {
+
+                    treatmisinfoshare = treatmisinfoshare + 1;
+                    treatmentMixedTweets.shift();
+
+                }
+                else
+                {
+                    treatmisinfonotshare = treatmisinfonotshare + 1;
+                    treatmentMixedTweets.shift();
+
+                }
+
+
+            }
+
+        
          count = count + 1;
-         document.getElementById('ansfeedback').style.display = 'none';
-         document.getElementById('rtfeedback').style.display = 'none';
-         showprob();
-      }
+         
+        startit();
+        
+        }
 
-   }
-}
+
+
+        function skipeval()
+        {
+
+            //No treatment. Clicked don't share and tweet was factual.
+            if (finalans == 0 && stimuliOrder[0] == 0)
+            {
+
+                notreatfactualnotshare = notreatfactualnotshare + 1;
+                mixedTweets.shift();
+
+            }
+            //No treatment. Clicked don't share and the tweet was misinfo.
+            if (finalans == 1 && stimuliOrder[0] == 0)
+            {
+
+                notreatmisinfonotshare = notreatmisinfonotshare + 1;
+                mixedTweets.shift();
+
+            }
+
+            //Treatment. Clicked Don't Share and the tweet was factual.
+            if (finalans == 0 && stimuliOrder[0] == 1)
+            {
+
+                treatfactualnotshare = treatfactualnotshare + 1;
+                treatmentMixedTweets.shift();
+
+            }
+            //Treatment. Clicked Don't share and the tweet was misinfo.
+            if (finalans == 1 && stimuliOrder[0] == 1)
+            {
+
+                treatmisinfonotshare = treatmisinfonotshare + 1;
+                treatmentMixedTweets.shift();
+
+            }
+
+            count = count + 1;
+
+            startit();
+
+        }
+
 
 
 </script>
+    
+    
+    
+    
+<body>
+    
+    <div id='intro' style='font-size:14pt; border:solid 3px; padding: 1px'>INSTRUCTIONS: You will be shown a series of Twitter posts. Each of the posts will have a 'share' button or a 'don't share' button. For tweets you think are true, click the 'share' button. For tweets you think are false, click the 'don't share' button.</div><br>
+    
+    <button id='startbutton' type='button' style='font-size:24pt;background:#ddffdd' onclick='this.blur();startit()'>Click Here to Start</button><br><br>
+    
+    <div id='tweet' style='font-size:14pt; border:solid 3px; padding: 1px; height: 250px;
+    width: 600px; position:absolute; top: 20%;
+    left: 30%; display:none'>
+
+    <img src='https://thumbs.dreamstime.com/b/profile-anonymous-face-icon-gray-silhouette-person-male-default-avatar-photo-placeholder-isolated-white-background-profile-107327860.jpg'
+        width='80px' height='80px'>
+
+    <div id='user' style='font-size:18pt; position:absolute;top:10%;left:20%'><b>Anonymous Twitter User</b></div>
+
+    <div id='time' style='font-size:14pt; position:absolute;top:11%;left:80%'> 17 min ago</div> <br>
+    
+    <div id='tweetpost' style='font-size:20pt;padding: 35px; display:none'></div>
+
+    </div><br><br>
+
+
+    <div id='sharebuttons' style=' display:none; position:absolute; top: 57%; left: 35%;'>
+    <button id='share' type='button' style='font-size:24pt;background:#ddffdd;' onmouseup='shareeval()'>Share</button>
+    <button id='dontshare' type='button' style='font-size:24pt;background:#ddffdd;' onmouseup='skipeval()'>Don't Share</button><br>
+    </div>
+
+    <div id='thankyoumessage' style='display:none;font-size:35pt;' text-align='center'>Thank You For Participating!</div><br><br><br><br><br>
+    
+    <table id='finalresults' border='0' table-layout=fixed' style='display:none'>
+        <tr><div id='sharefactualnotreat' style='font-size:20pt'></div></tr>
+        <tr><div id='notsharedfactualnotreat' style='font-size:20pt'></div></tr>
+        <tr><div id='sharedmisinfonotreat' style='font-size:20pt'></div></tr>
+        <tr><div id='notsharedmisinfonotreat' style='font-size:20pt'></div></tr>
+        
+        <tr><div id='sharedfactualtreat' style='font-size:20pt'></div></tr>
+        <tr><div id='notsharedfactualtreat' style='font-size:20pt'></div></tr>
+        <tr><div id='sharedmisinfotreat' style='font-size:20pt'></div></tr>
+        <tr><div id='notsharedmisinfotreat' style='font-size:20pt'></div></tr>
+    </table><br><br>
 
 
 
 
-<body id='quiz' onkeyup="return runScript(event)">
-
-<div id='intro' style='font-size:14pt; border:solid 3px; padding: 1px'>INSTRUCTIONS: Once the button is clicked, you will be presented with 5 multiple choice questions asking about the capitals of various states. Choose your answer by pressing the corresponding key on your keyboard. Click the space bar to move on to the next question</div><br>
-
-<button id='startbutton' type='button' style='font-size:24pt;background:#ddffdd' onclick='this.blur();startit()'>Click Here to Start</button><br><br>
-
-
-
-<div id='questions' style='font-size:14pt;display:none'></div><br>
-
-<table id='choiceAns' border='0' table-layout=fixed' style='display:none'>
-<tr><td><div id='ans1' style='font-size:12pt'></div></td>
-<td><div id='ans2' style='font-size:12pt'></div></td>
-<td><div id='ans3' style='font-size:12pt'></div></td>
-<td><div id='ans4' style='font-size:12pt'></div></td></tr></table><br><br>
-
-<div id='ansfeedback' style='font-size:12pt;display:none'></div><br>
-<div id='rtfeedback' style='font-size:12pt;display:none' ></div><br><br>
-
-<div id='finalDisplay' style='font-size:20pt;display:none' ></div><br>
-
-<div id='perfectScore' style='font-size:20pt;display:none' ></div><br><br>
-</form>
+</body>
